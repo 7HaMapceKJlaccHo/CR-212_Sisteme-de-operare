@@ -1,7 +1,5 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world from Cristi!");
-        System.out.println("Hello world from Virgiliu!");
-        System.out.println("Hello world from 22!");
+
     }
 }
