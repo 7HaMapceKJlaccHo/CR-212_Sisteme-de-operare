@@ -15,5 +15,6 @@ public class Alarma extends TimerTask {
 
         System.out.println( mesaj );
         JOptionPane.showMessageDialog(frame, mesaj);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }

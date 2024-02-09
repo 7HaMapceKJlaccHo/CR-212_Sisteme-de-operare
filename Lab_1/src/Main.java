@@ -21,16 +21,23 @@ public class Main {
         Button button1 = new Button("Interval de timp");
         Button button2 = new Button("Anumit timp");
         Button button3 = new Button("Perioada indicata");
+        Button buttonCancel = new Button("Button cancel");
+
 
 
         button1.setBounds(100,50,100,30);
         button2.setBounds(100,100,100,30);
         button3.setBounds(100,150,100,30);
+        buttonCancel.setBounds(100,200,100,30);
+
 
 
         frame.add(button1);
         frame.add(button2);
         frame.add(button3);
+        frame.add(buttonCancel);
+
+
 
         Label label = new Label();
         frame.add(label);
@@ -50,10 +57,17 @@ public class Main {
                 newframe.setSize(200,200);
                 newframe.setLayout(null);
                 newframe.setVisible(true);
-
+                newframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 Timer t1 = new Timer();
                 Atentie atentieTask = new Atentie(newframe);
                 t1.scheduleAtFixedRate(atentieTask, 0, 1000);
+            }
+        });
+
+        buttonCancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                t1.cancel();
             }
         });
 
