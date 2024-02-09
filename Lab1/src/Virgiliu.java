@@ -4,11 +4,11 @@ import java.awt.*;
 public class Virgiliu {
 
     private static int angle = 0;
-
+    private static Timer timer = null;
     public static void addClock(JPanel panel, int period) {
         JLabel label = getLabel();
 
-        Timer timer = new Timer(period, e -> {
+        timer = new Timer(period, e -> {
             angle += 6;
             if (angle >= 360) {
                 angle = 0;
@@ -19,6 +19,10 @@ public class Virgiliu {
         timer.start();
 
         panel.add(label);
+    }
+
+    public static void stopVirgiliuTimer() {
+        timer.stop();
     }
 
     private static JLabel getLabel() {
