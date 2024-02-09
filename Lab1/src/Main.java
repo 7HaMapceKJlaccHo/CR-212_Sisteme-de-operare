@@ -14,12 +14,13 @@ public class Main extends JFrame {
         JPanel sectiune1 = createSection("Virgiliu");
 
         Virgiliu.addClock(sectiune1, 1000);
+        Visterniceanu.start(sectiune2);
 
         add(sectiune1);
         add(sectiune2);
         add(sectiune3);
 
-        setSize(600, 200);
+        setSize(600, 400);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

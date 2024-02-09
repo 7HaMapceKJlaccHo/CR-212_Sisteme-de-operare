@@ -22,6 +22,7 @@ public class Virgiliu {
     }
 
     public static void stopVirgiliuTimer() {
+        timer.setRepeats(false);
         timer.stop();
     }
 
