@@ -14,6 +14,7 @@ public class Main extends JFrame {
         JPanel sectiune1 = createSection("Virgiliu");
 
         Virgiliu.addClock(sectiune1, 1000);
+        Cristi cristi = new Cristi(sectiune3);
 
         add(sectiune1);
         add(sectiune2);
