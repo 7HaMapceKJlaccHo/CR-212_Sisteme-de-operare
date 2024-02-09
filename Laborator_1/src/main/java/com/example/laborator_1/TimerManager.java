@@ -3,11 +3,12 @@ package com.example.laborator_1;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -48,61 +49,52 @@ public class TimerManager {
     private void startTimer(int operationNum, Label displayLabel) {
         // Oprim timer-ul anterior dacă este cazul.
         stopTimer();
-        timer = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                // Definim textul care va fi afișat în funcție de operație.
-                String text = "";
-                switch (operationNum) {
-                    case 1:
-                        text = "Număr aleator: " + Math.random();
-                        break;
-                    case 2:
-                        double randomNumber = Math.random() * 5;
-                        text = "Număr curent: " + randomNumber;
-                        if (randomNumber < 1) {
-                            // Dacă numărul este mai mic decât 1, afișăm o alertă.
-                            Platform.runLater(() -> showAlert());
-                        }
-                        break;
-                    case 3:
-                        text = "Alt număr: " + Math.random();
-                        break;
-                }
-                // Actualizăm eticheta din fereastra secundară cu textul nou.
-                String finalText = text;
-                Platform.runLater(() -> uiManager.updateLabel(displayLabel, finalText ));
-            }
-        };
 
-        // Setăm periodicitatea timer-ului în funcție de operație.
-        long period = 1000; // 1 secundă
-        if (operationNum == 1 || operationNum == 3) {
-            timer.scheduleAtFixedRate(task, 0, period);
-        } else if (operationNum == 2) {
-            timer.schedule(task, 2000); // O singură execuție după 2 secunde.
+        switch (operationNum) {
+            case 1:
+                timer = new Timer();
+                TimerTask task1 = new TimerTask() {
+                    @Override
+                    public void run() {
+                        // Generăm un număr aleator și îl afișăm.
+                        String text = "Număr aleator: " + Math.random();
+                        Platform.runLater(() -> uiManager.updateLabel(displayLabel, text));
+                    }
+                };
+                // Programăm sarcina pentru a fi executată la fiecare secundă.
+                timer.scheduleAtFixedRate(task1, 0, 1000);
+                break;
+            case 2:
+                TimerTask task2 = new TimerTask() {
+                    @Override
+                    public void run() {
+                        // Afișăm data și ora locală după 5 secunde.
+                        String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                        Platform.runLater(() -> uiManager.updateLabel(displayLabel, dateTime));
+                    }
+                };
+                // Programăm sarcina pentru a fi executată o singură dată, după 5 secunde.
+                timer = new Timer();
+                timer.schedule(task2, 5000);
+                break;
+            case 3:
+                String greetingText = "Buna";
+                Platform.runLater(() -> uiManager.updateLabel(displayLabel, greetingText));
+                TimerTask task3 = new TimerTask() {
+                    @Override
+                    public void run() {
+                        // După 10 secunde, ștergem textul din interfață.
+                        Platform.runLater(() -> uiManager.updateLabel(displayLabel, ""));
+                    }
+                };
+                // Programăm sarcina pentru a fi executată o singură dată, după 10 secunde.
+                timer = new Timer();
+                timer.schedule(task3, 10000);
+                break;
+            default:
+                // Pentru operațiile necunoscute, nu facem nimic.
+                break;
         }
-
-        // Pentru Operația 3, oprește timer-ul după 10 secunde.
-        if (operationNum == 3) {
-            TimerTask stopTask = new TimerTask() {
-                @Override
-                public void run() {
-                    stopTimer();
-                }
-            };
-            timer.schedule(stopTask, 10000); // Programăm oprirea.
-        }
-    }
-
-    // Metoda pentru afișarea unei alerte în cazul în care este necesar.
-    private void showAlert() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Avertisment");
-        alert.setHeaderText(null);
-        alert.setContentText("Numărul generat este mai mic decât 1!");
-        alert.showAndWait(); // Așteptăm până utilizatorul închide alerta.
     }
 
     // Metoda pentru oprirea timer-ului.
@@ -114,5 +106,3 @@ public class TimerManager {
         }
     }
 }
-
-
