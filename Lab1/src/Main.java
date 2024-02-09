@@ -13,7 +13,7 @@ public class Main extends JFrame {
         JPanel sectiune2 = createSection("Roman");
         JPanel sectiune1 = createSection("Virgiliu");
 
-        Virgiliu.addClock(sectiune1);
+        Virgiliu.addClock(sectiune1, 1000);
 
         add(sectiune1);
         add(sectiune2);

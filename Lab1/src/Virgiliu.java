@@ -5,10 +5,10 @@ public class Virgiliu {
 
     private static int angle = 0;
 
-    public static void addClock(JPanel panel) {
+    public static void addClock(JPanel panel, int period) {
         JLabel label = getLabel();
 
-        Timer timer = new Timer(1000, e -> {
+        Timer timer = new Timer(period, e -> {
             angle += 6;
             if (angle >= 360) {
                 angle = 0;
