@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
-class Alarma extends TimerTask {
+public class Alarma extends TimerTask {
     public String mesaj ;
     JFrame frame;
     public Alarma(String mesaj) {

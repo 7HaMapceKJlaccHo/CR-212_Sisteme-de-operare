@@ -1,4 +1,10 @@
-class Atentie extends TimerTask {
+import javax.swing.*;
+import java.util.Random;
+
+
+import java.util.TimerTask;
+
+public class Atentie extends TimerTask {
     int a = 4, b = 2;
     JFrame frame;
 
