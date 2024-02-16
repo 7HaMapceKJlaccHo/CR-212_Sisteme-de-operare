@@ -42,6 +42,7 @@ class TimerButton {
         this.button = new JButton(buttonText);
         this.timerLabel = timerLabel;
 
+
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
