@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Timer;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.TimerTask;
 
 public class Main {
@@ -20,12 +22,11 @@ public class Main {
 
         TimerButton timerButton = new TimerButton("Cronometru", timerLabel);
         HourglassButton hourglassButton = new HourglassButton("Clepsidră (5 sec)",timerLabel);
-        ColorChangingButton colorChangingButton = new ColorChangingButton("Schimba culoarea");
-
+        TimedColorChangeButton timedColorChangeButton = new TimedColorChangeButton("Schimbă culoarea la ora stabilita", 18, 17);
         frame.add(timerLabel);
         frame.add(timerButton.getButton());
         frame.add(hourglassButton.getButton());
-        frame.add(colorChangingButton.getButton());
+        frame.add(timedColorChangeButton.getButton());
 
         frame.pack();
         frame.setVisible(true);
@@ -115,19 +116,19 @@ class HourglassButton {
     }
 }
 
-class ColorChangingButton {
+class TimedColorChangeButton {
     private final JButton button;
-    private final Color[] colors = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.ORANGE,Color.LIGHT_GRAY};
+    private final Color[] colors = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.ORANGE, Color.LIGHT_GRAY};
     private int currentIndex = 0;
     private Timer timer;
 
-    public ColorChangingButton(String buttonText) {
+    public TimedColorChangeButton(String buttonText, int hour, int minute) {
         this.button = new JButton(buttonText);
 
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                startColorChanging();
+                startColorChangingAtTime(hour, minute);
             }
         });
     }
@@ -136,22 +137,32 @@ class ColorChangingButton {
         return button;
     }
 
-    private void startColorChanging() {
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            int secondsPassed = 0;
+    private void startColorChangingAtTime(int hour, int minute) {
+        Calendar startTime = Calendar.getInstance();
+        startTime.set(Calendar.HOUR_OF_DAY, hour);
+        startTime.set(Calendar.MINUTE, minute);
+        startTime.set(Calendar.SECOND, 0);
 
+        Date now = new Date();
+        long delay = startTime.getTimeInMillis() - now.getTime();
+        if (delay < 0) {
+            // Dacă ora specificată este în trecut, adăugăm 24 de ore pentru a programarea să fie pentru ziua următoare
+            delay += 24 * 60 * 60 * 1000;
+        }
+
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
             @Override
             public void run() {
-
-                if (secondsPassed < 5) {
-                    button.setBackground(colors[currentIndex]);
-                    currentIndex = (currentIndex + 1) % colors.length;
-                    secondsPassed++;
-                } else {
-                    timer.cancel();
-                }
+                button.setBackground(colors[currentIndex]);
+                currentIndex = (currentIndex + 1) % colors.length;
             }
-        }, 0, 1000);
+        }, delay, 24 * 60 * 60 * 1000); // Se repetă la fiecare 24 de ore
+    }
+
+    public void stopColorChanging() {
+        if (timer != null) {
+            timer.cancel();
+        }
     }
 }
