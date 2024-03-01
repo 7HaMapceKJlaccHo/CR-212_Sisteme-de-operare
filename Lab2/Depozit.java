@@ -46,6 +46,7 @@ class Depozit {
             log(Thread.currentThread().getName() + " a produs " + objectsToProduce + " obiect(e) (volum_depozit: " + obiect + ") " + totalProduced);
             notifyAll();
         }
+    }
 
         public synchronized void consume() {
             while (totalConsumed < 19) {
@@ -79,15 +80,10 @@ class Depozit {
                 notifyAll();
             }
         }
-    }
+
 
     private void log(String message) {
         SwingUtilities.invokeLater(() -> textArea.append(message + "\n"));
     }
 }
 
-
-public class Main {
-    public static void main(String[] args) {
-    }
-}
