@@ -1,10 +1,12 @@
 public class Consumator extends Thread {
     private Depozit depozit;
     private String nume;
+    private Main gui;
 
-    public Consumator(Depozit depozit, String nume) {
+    public Consumator(Depozit depozit, String nume, Main gui) {
         this.depozit = depozit;
         this.nume = nume;
+        this.gui = gui;
     }
 
     @Override
@@ -25,6 +27,7 @@ public class Consumator extends Thread {
                 char[] obiecte = depozit.consume();
                 consumedCount += 2;
                 System.out.println(nume + " a consumat: " + new String(obiecte));
+                gui.updateProduseConsumateC(nume + " a consumat: " ,new char[0], obiecte); // Actualizare GUI
                 depozit.notifyAll();
             }
 

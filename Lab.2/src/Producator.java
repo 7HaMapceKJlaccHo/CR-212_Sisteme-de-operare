@@ -5,10 +5,12 @@ public class Producator extends Thread {
     private static int totalObiecteProduse = 0;
     private static final int TOTAL_OBIECTE = 38;
     private String nume;
+    private Main gui;
 
-    public Producator(Depozit depozit, String nume) {
+    public Producator(Depozit depozit, String nume, Main gui) {
         this.depozit = depozit;
         this.nume = nume;
+        this.gui = gui;
     }
 
     @Override
@@ -35,6 +37,7 @@ public class Producator extends Thread {
                 depozit.produce(obiecte);
                 totalObiecteProduse += 2;
                 System.out.println(nume + " a produs: " + new String(obiecte));
+                gui.updateProduseConsumateP(nume + " a produs: " ,obiecte,new char[0]); // Actualizare GUI
                 depozit.notifyAll();
             }
 
@@ -50,6 +53,4 @@ public class Producator extends Thread {
     public static int getTotalObiecteProduse() {
         return totalObiecteProduse;
     }
-
-
 }
