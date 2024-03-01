@@ -22,7 +22,7 @@ public class Main {
 
         TimerButton timerButton = new TimerButton("Cronometru", timerLabel);
         HourglassButton hourglassButton = new HourglassButton("Clepsidră (5 sec)",timerLabel);
-        TimedColorChangeButton timedColorChangeButton = new TimedColorChangeButton("Schimbă culoarea la ora stabilita", 18, 17);
+        TimedColorChangeButton timedColorChangeButton = new TimedColorChangeButton("Schimbă culoarea la ora stabilita", 18, 26);
         frame.add(timerLabel);
         frame.add(timerButton.getButton());
         frame.add(hourglassButton.getButton());
