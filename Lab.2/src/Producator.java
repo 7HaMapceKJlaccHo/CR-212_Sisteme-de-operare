@@ -27,8 +27,9 @@ public class Producator extends Thread {
                 }
 
                 char[] obiecte = new char[2];
+                String consoane = "BCDFGHJKLMNPQRSTVWXYZ"; // Lista de consoane
                 for (int i = 0; i < 2; i++) {
-                    obiecte[i] = (char) (random.nextInt(26) + 'A');
+                    obiecte[i] = consoane.charAt(random.nextInt(consoane.length()));
                 }
 
                 depozit.produce(obiecte);
@@ -50,8 +51,5 @@ public class Producator extends Thread {
         return totalObiecteProduse;
     }
 
-    private char generareConsoana() {
-        String consoane = "BCDFGHJKLMNPQRSTVWXYZ"; // Lista de consoane
-        return consoane.charAt(random.nextInt(consoane.length()));
-    }
+
 }
